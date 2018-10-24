@@ -1,13 +1,13 @@
 package edu.austral.starship.scala.base.framework
 
-import edu.austral.starship.scala.CustomGameFramework
+import edu.austral.starship.scala.base.controllers.MainController
 import processing.core.PApplet
 import processing.event.KeyEvent
 
 import scala.collection.mutable
 
 class GameManager extends PApplet {
-  private val gameFramework: GameFramework = CustomGameFramework
+  private val gameFramework: GameFramework = MainController
   private var keySet = mutable.Set[Int]()
 
   override def settings(): Unit = gameFramework.setup(WindowSettings(this), ImageLoader(this))
