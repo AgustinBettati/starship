@@ -1,8 +1,8 @@
 package edu.austral.starship.scala.base.controllers
 
-import edu.austral.starship.scala.base.models.Spaceship
+import edu.austral.starship.scala.base.models.Player
+import edu.austral.starship.scala.base.utils.Move
 import edu.austral.starship.scala.base.vector.Vector2
-import processing.core.PConstants
 
 /**
   * @author Agustin Bettati
@@ -13,14 +13,17 @@ trait KeyEventObserver {
 }
 
 //player controller va tener al player, y player al spaceship
-case class PlayerController(var spaceship: Spaceship) extends KeyEventObserver {
+case class PlayerController(var player: Player, config: Map[Move.Value, Int]) extends KeyEventObserver {
 
   override def onKeyEvent(key: Int): Unit = {
+    println(key)
     key match {
-      case PConstants.UP => spaceship.position = spaceship.position + Vector2(0, -1)
-      case PConstants.LEFT => spaceship.position = spaceship.position + Vector2(-1, 0)
-      case PConstants.RIGHT => spaceship.position = spaceship.position + Vector2(1, 0)
-      case PConstants.DOWN => spaceship.position = spaceship.position + Vector2(0, 1)
+      case _ if key == config(Move.UP) => player.spaceship.changePosition(Vector2(0, -1))
+      case _ if key == config(Move.LEFT) => player.spaceship.changePosition(Vector2(-1, 0))
+      case _ if key == config(Move.RIGHT) => player.spaceship.changePosition(Vector2(1, 0))
+      case _ if key == config(Move.DOWN) => player.spaceship.changePosition(Vector2(0, 1))
+      case _ if key == config(Move.FIRE) =>
+      case _ if key == config(Move.GUN_CHANGE) =>
       case _ =>
     }
   }

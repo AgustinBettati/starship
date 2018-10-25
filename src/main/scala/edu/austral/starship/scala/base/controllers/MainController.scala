@@ -1,8 +1,8 @@
 package edu.austral.starship.scala.base.controllers
 
 import edu.austral.starship.scala.base.framework.{GameFramework, ImageLoader, WindowSettings}
-import edu.austral.starship.scala.base.models.Spaceship
-import edu.austral.starship.scala.base.vector.Vector2
+import edu.austral.starship.scala.base.models.Player
+import edu.austral.starship.scala.base.utils.Move
 import processing.core.{PConstants, PGraphics, PImage}
 import processing.event.KeyEvent
 
@@ -13,30 +13,50 @@ trait ObservableKeyEvent {
 object MainController extends ObservableKeyEvent with GameFramework {
 
   private var observers: List[KeyEventObserver] = Nil
-  private var spaceship: Spaceship = _
   private var image: PImage = _
 
   override def setup(windowsSettings: WindowSettings, imageLoader: ImageLoader): Unit = {
     windowsSettings.setSize(500, 500)
     windowsSettings.enableHighPixelDensity()
-    image = imageLoader.load("images/foto.png")
+    image = imageLoader.load("images/spaceship.png")
 
-    //aca voy a instanciar a un player, y lo meto en player controller
-    spaceship = Spaceship(Vector2(50,50))
-    val playerController = PlayerController(spaceship)
+
+    val player = Player("Agustin")
+    MapController.addObjects(List(player.spaceship))
+
+    val configA: Map[Move.Value, Int] = Map(
+      Move.UP -> PConstants.UP,
+      Move.DOWN -> PConstants.DOWN,
+      Move.LEFT -> PConstants.LEFT,
+      Move.RIGHT -> PConstants.RIGHT,
+      Move.FIRE -> PConstants.BACKSPACE,
+      Move.GUN_CHANGE -> PConstants.TAB
+    )
+    val playerController = PlayerController(player, configA)
     observers = playerController :: observers
   }
 
   override def draw(graphics: PGraphics, timeSinceLastDraw: Float, keySet: Set[Int]): Unit = {
+    graphics.background(255,255,255)
     keySet foreach notifyKeyEvent
-    graphics.image(image, spaceship.position.x, spaceship.position.y, 70, 70)
+
+    MapController.obtainObjects.foreach( element => {
+
+      graphics.pushMatrix()
+      graphics.imageMode(PConstants.CENTER)
+      graphics.translate(element.position.x, element.position.y)
+      val angle = element.direction.inverse.angle
+      graphics.rotate(angle)
+      graphics.image(image,0,0,70,70)
+      graphics.popMatrix()
+
+    })
   }
 
   override def keyPressed(event: KeyEvent): Unit = {
   }
 
   override def keyReleased(event: KeyEvent): Unit = {
-
   }
 
   override def notifyKeyEvent(key: Int): Unit = {

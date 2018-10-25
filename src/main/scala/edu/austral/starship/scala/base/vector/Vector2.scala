@@ -13,6 +13,8 @@ case class Vector2(x: Float, y: Float) {
 
   def -(other: Vector2): Vector2 = Vector2(x - other.x, y - other.y)
 
+  def inverse: Vector2 = Vector2(-x, -y)
+
   def *(scalar: Float): Vector2 = Vector2(x * scalar, y * scalar)
 
   def rotate(angle: Float): Vector2 = Vector2(x * cos(angle) - y * sin(angle) toFloat, x * sin(angle) + y * cos(angle) toFloat)
