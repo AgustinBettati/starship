@@ -11,6 +11,7 @@ case class Player(name: String, var score: Int, var lives: Int, var spaceship: S
   }
 
   def assignNewShip(newSpaceship: Spaceship): Unit = {
+    lives = lives - 1
     spaceship = newSpaceship
   }
 
