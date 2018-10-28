@@ -4,7 +4,11 @@ package edu.austral.starship.scala.base.models
   * @author Agustin Bettati
   * @version 1.0
   */
-case class Player(name: String, var score: Int, var lives: Int, var spaceship: Spaceship) {
+trait BulletObserver{
+  def onBulletHit(score: Int): Unit
+}
+
+case class Player(name: String, var score: Int, var lives: Int, var spaceship: Spaceship) extends BulletObserver {
 
   def increaseScore(addition: Int): Unit ={
     score = score + addition
@@ -15,6 +19,9 @@ case class Player(name: String, var score: Int, var lives: Int, var spaceship: S
     spaceship = newSpaceship
   }
 
+  override def onBulletHit(score: Int): Unit = {
+    this.score += score
+  }
 }
 
 object Player {

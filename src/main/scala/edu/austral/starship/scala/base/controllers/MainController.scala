@@ -6,7 +6,7 @@ import edu.austral.starship.scala.base.framework.{GameFramework, ImageLoader, Wi
 import edu.austral.starship.scala.base.models.{Asteroid, Bullet, Player, Spaceship}
 import edu.austral.starship.scala.base.utils.Move
 import edu.austral.starship.scala.base.vector.Vector2
-import edu.austral.starship.scala.base.view.ProcessingDrawer
+import edu.austral.starship.scala.base.view.{ProcessingDrawer, Renderer}
 import processing.core.{PConstants, PGraphics, PImage}
 import processing.event.KeyEvent
 
@@ -21,12 +21,8 @@ object MainController extends ObservableKeyEvent with GameFramework {
 
   override def setup(windowsSettings: WindowSettings, imageLoader: ImageLoader): Unit = {
     ProcessingDrawer.setupVisual(windowsSettings)
+    images = ProcessingDrawer.loadImages(imageLoader)
 
-    images = Map(
-      "spaceship" -> imageLoader.load("images/spaceship.png"),
-      "normalBullet" -> imageLoader.load("images/normalBullet.png"),
-      "asteroid" -> imageLoader.load("images/asteroid.png")
-    )
 
     val player = Player("Agustin")
     MapController.addObjects(List(player.spaceship))
@@ -47,8 +43,8 @@ object MainController extends ObservableKeyEvent with GameFramework {
     keySet foreach notifyKeyEvent
 
     MapController.moveObjects()
-    ProcessingDrawer.drawObjects(MapController.obtainObjects, graphics, images)
-    println(MapController.obtainObjects.length)
+    val rendered = Renderer.renderObjects(MapController.obtainObjects, images)
+    ProcessingDrawer.drawObjects(rendered, graphics)
   }
 
   override def keyPressed(event: KeyEvent): Unit = {
@@ -60,4 +56,5 @@ object MainController extends ObservableKeyEvent with GameFramework {
   override def notifyKeyEvent(key: Int): Unit = {
     observers.foreach(_.onKeyEvent(key))
   }
+
 }

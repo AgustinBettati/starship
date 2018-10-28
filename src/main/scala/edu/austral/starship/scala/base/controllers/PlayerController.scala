@@ -22,7 +22,7 @@ case class PlayerController(var player: Player, config: Map[Move.Value, Int]) ex
       case _ if key == config(Move.RIGHT) => player.spaceship.changePosition(Vector2(1, 0))
       case _ if key == config(Move.DOWN) => player.spaceship.changePosition(Vector2(0, 1))
       case _ if key == config(Move.FIRE) => {
-        val firedBullet = player.spaceship.fireBullet
+        val firedBullet = player.spaceship.fireBullet(player)
         MapController.addObjects(List(firedBullet))
       }
       case _ if key == config(Move.GUN_CHANGE) =>

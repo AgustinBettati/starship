@@ -25,12 +25,12 @@ case class Spaceship(var position: Vector2, var direction: Vector2, var health: 
     direction = Vector2.fromModule(direction.module, (direction*5 + addition).angle)
   }
 
-  def fireBullet: Bullet = {
+  def fireBullet(player: Player): Bullet = {
     //esto lo va hacer gun
-    Bullet(position + direction.unitary * 50, direction)
+    Bullet(position + direction.unitary * 50, direction, player)
   }
 }
 
 object Spaceship {
-  def apply(): Spaceship = new Spaceship(Vector2(50,50), Vector2(1, 1))
+  def apply(): Spaceship = new Spaceship(Vector2(Configuration.size / 2,Configuration.size / 2), Vector2(-1, 0))
 }
