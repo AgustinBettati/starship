@@ -17,14 +17,6 @@ object ProcessingDrawer {
     settings.enableHighPixelDensity()
   }
 
-  def loadImages(imageLoader: ImageLoader): Map[String, PImage] = {
-    Map(
-      "spaceship" -> imageLoader.load("images/spaceship.png"),
-      "regularBullet" -> imageLoader.load("images/normalBullet.png"),
-      "asteroid" -> imageLoader.load("images/asteroid.png")
-    )
-  }
-
 
   def drawObjects(objects: List[RenderResult], graphics: PGraphics): Unit = {
 

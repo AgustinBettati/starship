@@ -3,6 +3,7 @@ package edu.austral.starship.scala.base.view
 import java.awt.Rectangle
 import java.awt.geom.Ellipse2D
 
+import edu.austral.starship.scala.base.framework.ImageLoader
 import edu.austral.starship.scala.base.models._
 import processing.core.PImage
 
@@ -11,6 +12,14 @@ import processing.core.PImage
   * @version 1.0
   */
 object Renderer {
+
+  def loadImages(imageLoader: ImageLoader): Map[String, PImage] = {
+    Map(
+      "spaceship" -> imageLoader.load("images/spaceship.png"),
+      "regularBullet" -> imageLoader.load("images/normalBullet.png"),
+      "asteroid" -> imageLoader.load("images/asteroid.png")
+    )
+  }
 
   def renderObjects(objects: List[GameObject], images: Map[String, PImage]): List[RenderResult] = {
 

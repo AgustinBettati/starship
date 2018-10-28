@@ -21,7 +21,7 @@ object MainController extends ObservableKeyEvent with GameFramework {
 
   override def setup(windowsSettings: WindowSettings, imageLoader: ImageLoader): Unit = {
     ProcessingDrawer.setupVisual(windowsSettings)
-    images = ProcessingDrawer.loadImages(imageLoader)
+    images = Renderer.loadImages(imageLoader)
 
 
     val player = Player("Agustin")
