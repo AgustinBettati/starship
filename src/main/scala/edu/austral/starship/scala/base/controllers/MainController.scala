@@ -1,5 +1,7 @@
 package edu.austral.starship.scala.base.controllers
 
+import java.awt.event.{KeyEvent => JavaKeyEvent}
+
 import edu.austral.starship.scala.base.framework.{GameFramework, ImageLoader, WindowSettings}
 import edu.austral.starship.scala.base.models.{Asteroid, Bullet, Player, Spaceship}
 import edu.austral.starship.scala.base.utils.Move
@@ -34,7 +36,7 @@ object MainController extends ObservableKeyEvent with GameFramework {
       Move.DOWN -> PConstants.DOWN,
       Move.LEFT -> PConstants.LEFT,
       Move.RIGHT -> PConstants.RIGHT,
-      Move.FIRE -> PConstants.BACKSPACE,
+      Move.FIRE -> PConstants.SHIFT,
       Move.GUN_CHANGE -> PConstants.TAB
     )
     val playerController = PlayerController(player, configA)

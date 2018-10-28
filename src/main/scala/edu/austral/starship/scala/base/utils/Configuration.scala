@@ -5,5 +5,5 @@ package edu.austral.starship.scala.base.utils
   * @version 1.0
   */
 object Configuration {
-  val size = 500
+  val size = 600
 }

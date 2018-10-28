@@ -2,6 +2,7 @@ package edu.austral.starship.scala.base.view
 
 import edu.austral.starship.scala.base.framework.WindowSettings
 import edu.austral.starship.scala.base.models.{Asteroid, Bullet, GameObject, Spaceship}
+import edu.austral.starship.scala.base.utils.Configuration
 import processing.core.{PConstants, PGraphics, PImage}
 
 /**
@@ -12,7 +13,7 @@ import processing.core.{PConstants, PGraphics, PImage}
 object ProcessingDrawer {
 
   def setupVisual(settings: WindowSettings): Unit = {
-    settings.setSize(500, 500)
+    settings.setSize(Configuration.size, Configuration.size)
     settings.enableHighPixelDensity()
   }
 

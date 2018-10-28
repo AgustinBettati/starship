@@ -1,5 +1,6 @@
 package edu.austral.starship.scala.base.models
 
+import edu.austral.starship.scala.base.utils.Configuration
 import edu.austral.starship.scala.base.vector.Vector2
 
 /**
@@ -10,16 +11,17 @@ case class Spaceship(var position: Vector2, var direction: Vector2, var health: 
 
 
   override def wentOutOfBounds: Unit = {
-    if(position.x > 500 || position.x < 0)
-      position = Vector2(Math.abs(position.x - 500), position.y)
-    if(position.y > 500 || position.y < 0)
-      position = Vector2(position.x, Math.abs(position.y - 500))
+    val boundry = Configuration.size
+    if(position.x > boundry || position.x < 0)
+      position = Vector2(Math.abs(position.x - boundry), position.y)
+    if(position.y > boundry || position.y < 0)
+      position = Vector2(position.x, Math.abs(position.y - boundry))
   }
 
   override def advance(): Unit = Unit
 
   def changePosition(addition: Vector2): Unit = {
-    position = position + addition
+    position = position + addition * 2
     direction = Vector2.fromModule(direction.module, (direction*5 + addition).angle)
   }
 

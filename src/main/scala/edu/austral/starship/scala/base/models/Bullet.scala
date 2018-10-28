@@ -8,7 +8,7 @@ import edu.austral.starship.scala.base.vector.Vector2
   */
 case class Bullet(var position: Vector2, var direction: Vector2, var health: Int = 100) extends GameObject {
 
-  override def advance(): Unit = position = position + direction.unitary
+  override def advance(): Unit = position = position + (direction.unitary * 3)
 
   override def wentOutOfBounds: Unit = health = 0
 }
