@@ -4,7 +4,7 @@ import java.awt.event.{KeyEvent => JavaKeyEvent}
 
 import edu.austral.starship.scala.base.framework.{GameFramework, ImageLoader, WindowSettings}
 import edu.austral.starship.scala.base.models.{Asteroid, Bullet, Player, Spaceship}
-import edu.austral.starship.scala.base.utils.Move
+import edu.austral.starship.scala.base.utils.{Configuration, Move}
 import edu.austral.starship.scala.base.vector.Vector2
 import edu.austral.starship.scala.base.view.{ProcessingDrawer, Renderer}
 import processing.core.{PConstants, PGraphics, PImage}
@@ -37,6 +37,9 @@ object MainController extends ObservableKeyEvent with GameFramework {
     )
     val playerController = PlayerController(player, configA)
     observers = playerController :: observers
+
+//    val center: Int = Configuration.size / 2
+//    MapController.addObjects(List(Asteroid(Vector2(center, center), Vector2(-1,0),100,70.toFloat)))
   }
 
   override def draw(graphics: PGraphics, timeSinceLastDraw: Float, keySet: Set[Int]): Unit = {

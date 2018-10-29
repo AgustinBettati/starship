@@ -5,6 +5,7 @@ import java.awt.geom.Ellipse2D
 
 import edu.austral.starship.scala.base.framework.ImageLoader
 import edu.austral.starship.scala.base.models._
+import edu.austral.starship.scala.base.utils.Configuration
 import processing.core.PImage
 
 /**
@@ -22,8 +23,8 @@ object Renderer {
   }
 
   def renderObjects(objects: List[GameObject], images: Map[String, PImage]): List[RenderResult] = {
-
     objects map {
+//      Poner un bounds cuadrado
       case Spaceship(position, direction, health) =>
         RenderResult(position,direction,images("spaceship"), 70,new Rectangle(), null)
 
@@ -31,7 +32,10 @@ object Renderer {
         RenderResult(position,direction,images("regularBullet"), 40,new Rectangle(), null)
 
       case Asteroid(position, direction, health, size) =>
-        RenderResult(position,direction,images("asteroid"), 60 + 20 * size, new Ellipse2D.Double(100, 100, 100, 100), null)
+        val xUpperLeft = position.x - size / 2
+        val yUpperLeft = position.y + size / 2
+        RenderResult(position,direction,images("asteroid"), size,
+          new Ellipse2D.Float(xUpperLeft,yUpperLeft, size - 5, size - 5), null)
     }
   }
 

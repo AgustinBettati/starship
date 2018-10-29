@@ -1,5 +1,7 @@
 package edu.austral.starship.scala.base.view
 
+import java.awt.Rectangle
+
 import edu.austral.starship.scala.base.framework.{ImageLoader, WindowSettings}
 import edu.austral.starship.scala.base.models._
 import edu.austral.starship.scala.base.utils.Configuration
@@ -23,7 +25,19 @@ object ProcessingDrawer {
     graphics.background(255,255,255)
 
     objects foreach {
-      case RenderResult(position, direction, image, sizeOfImage, _, _) =>
+      case RenderResult(position, direction, image, sizeOfImage, shape, _) =>
+        //TODO dibujar el bounds del shape
+        val bounds: Rectangle  = shape.getBounds
+        val x: Float = bounds.getX.toFloat
+        val y: Float = bounds.getY.toFloat
+        val width: Float = bounds.getWidth.toFloat
+        val height: Float= bounds.getHeight.toFloat
+
+        graphics.point(x, y)
+        graphics.point(x + width, y)
+        graphics.point(x, y - height)
+        graphics.point(x + width, y - height)
+
         graphics.pushMatrix()
         graphics.imageMode(PConstants.CENTER)
         graphics.translate(position.x, position.y)

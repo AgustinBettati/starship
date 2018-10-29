@@ -18,7 +18,7 @@ object AsteroidController {
     var number: Float = random.nextInt(10000)
     if(number > 9900){
       number = number - 9900
-      val size = random.nextFloat()
+      val size = 60 + 20 * random.nextFloat()
       val position = random.nextFloat()
       var negativeDirection = random.nextFloat()
       if(random.nextBoolean()) negativeDirection = - negativeDirection
