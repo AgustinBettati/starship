@@ -24,5 +24,7 @@ case class RenderResult(
 
   override def getShape: Shape = shape
 
-  override def collisionedWith(collisionable: RenderResult): Unit = collisionHandler.handleCollision( collisionable.collisionHandler )
+  override def collisionedWith(collisionable: RenderResult): Unit = {
+    collisionHandler.handleCollision( collisionable.collisionHandler )
+  }
 }

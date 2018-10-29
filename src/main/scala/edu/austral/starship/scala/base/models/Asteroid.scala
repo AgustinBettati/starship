@@ -16,5 +16,18 @@ case class Asteroid( var position: Vector2,
 
   override def advance(): Unit = position = position + direction.unitary * (0.5 + 0.5 * (Math.abs(size-80) / 20)).toFloat
 
-  override def wentOutOfBounds: Unit = health = 0
+  override def wentOutOfBounds(): Unit = health = 0
+
+  override def collisionedWithAsteroid(ast: Asteroid): Unit = Unit
+
+  override def collisionedWithBullet(bullet: Bullet): Unit = {
+    health = 0
+  }
+
+  override def collisionedWithSpaceship(spaceship: Spaceship): Unit = {
+    health = 0
+  }
+
+  override def handleCollision(other: CollisionHandler): Unit = other.collisionedWithAsteroid(this)
+
 }

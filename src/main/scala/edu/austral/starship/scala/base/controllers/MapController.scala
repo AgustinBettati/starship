@@ -19,7 +19,7 @@ object MapController {
 
   def moveObjects(): Unit = {
     AsteroidController.spawnAsteroid() foreach (ast => objects = ast :: objects)
-    objects.foreach(element => if (isOutOfBounds(element)) element.wentOutOfBounds)
+    objects.foreach(element => if (isOutOfBounds(element)) element.wentOutOfBounds())
     objects = objects.filter(_.health > 0)
     objects.foreach(_.advance())
   }

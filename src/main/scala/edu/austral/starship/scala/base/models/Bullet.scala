@@ -22,9 +22,20 @@ case class Bullet(
 
   override def advance(): Unit = position = position + (direction.unitary * 3)
 
-  override def wentOutOfBounds: Unit = health = 0
+  override def wentOutOfBounds(): Unit = health = 0
 
   override def notifyOnHit(score: Int): Unit = observers foreach(_.onBulletHit(score))
+
+  override def collisionedWithAsteroid(ast: Asteroid): Unit = {
+    notifyOnHit(1)
+    health = 0
+  }
+
+  override def collisionedWithBullet(bullet: Bullet): Unit = Unit
+
+  override def collisionedWithSpaceship(spaceship: Spaceship): Unit =notifyOnHit(10)
+
+  override def handleCollision(other: CollisionHandler): Unit = other.collisionedWithBullet(this)
 }
 
 object Bullet {

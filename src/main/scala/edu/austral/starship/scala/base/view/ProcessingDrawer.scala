@@ -2,10 +2,10 @@ package edu.austral.starship.scala.base.view
 
 import java.awt.{Rectangle, Shape}
 
-import edu.austral.starship.scala.base.framework.{ImageLoader, WindowSettings}
+import edu.austral.starship.scala.base.framework.WindowSettings
 import edu.austral.starship.scala.base.models._
 import edu.austral.starship.scala.base.utils.Configuration
-import processing.core.{PConstants, PGraphics, PImage}
+import processing.core.{PConstants, PGraphics}
 
 /**
   * @author Agustin Bettati
@@ -20,14 +20,18 @@ object ProcessingDrawer {
   }
 
 
-  def drawObjects(objects: List[RenderResult], graphics: PGraphics): Unit = {
-
+  def drawObjects(players: List[Player], objects: List[RenderResult], graphics: PGraphics): Unit = {
     graphics.background(255,255,255)
+
+    graphics.textSize(20)
+    for((player, index) <- players.zipWithIndex) {
+      graphics.fill(0, 102, 153)
+      graphics.text(s"${player.name}: ${player.score}", 50, 50, 100)
+    }
 
     objects foreach {
       case RenderResult(position, direction, image, sizeOfImage, shape, _) =>
         drawBoundsOfCollider(graphics, shape)
-
         graphics.pushMatrix()
         graphics.imageMode(PConstants.CENTER)
         graphics.translate(position.x, position.y)
@@ -36,37 +40,9 @@ object ProcessingDrawer {
         graphics.image(image, 0, 0, sizeOfImage, sizeOfImage)
         graphics.popMatrix()
     }
-
-//    objects.foreach {
-//      case Spaceship(position, direction, health) =>
-//        graphics.pushMatrix()
-//        graphics.imageMode(PConstants.CENTER)
-//        graphics.translate(position.x, position.y)
-//        val angle = direction.inverse.angle
-//        graphics.rotate(angle)
-//        graphics.image(images("spaceship"), 0, 0, 70, 70)
-//        graphics.popMatrix()
-//
-//      case Bullet(position, direction, health, _observers) =>
-//        graphics.pushMatrix()
-//        graphics.imageMode(PConstants.CENTER)
-//        graphics.translate(position.x, position.y)
-//        val angle = direction.inverse.angle
-//        graphics.rotate(angle)
-//        graphics.image(images("normalBullet"), 0, 0, 40, 40)
-//        graphics.popMatrix()
-//
-//      case Asteroid(position, direction, health, size) =>
-//        graphics.pushMatrix()
-//        graphics.imageMode(PConstants.CENTER)
-//        graphics.translate(position.x, position.y)
-//        val angle = direction.inverse.angle
-//        graphics.rotate(angle)
-//        graphics.image(images("asteroid"), 0, 0, 60 + 20 * size, 60 + 20 * size)
-//        graphics.popMatrix()
   }
 
-  private def drawBoundsOfCollider(graphics: PGraphics, shape: Shape) = {
+  private def drawBoundsOfCollider(graphics: PGraphics, shape: Shape): Unit = {
     val bounds: Rectangle = shape.getBounds
     val x: Float = bounds.getX.toFloat
     val y: Float = bounds.getY.toFloat

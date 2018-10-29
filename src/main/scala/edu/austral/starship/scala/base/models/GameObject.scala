@@ -8,7 +8,7 @@ import edu.austral.starship.scala.base.vector.Vector2
   */
 
 
-trait GameObject {
+trait GameObject extends CollisionHandler {
   def position: Vector2
   def direction: Vector2
   def health: Int
