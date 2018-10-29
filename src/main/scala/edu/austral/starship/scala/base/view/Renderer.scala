@@ -1,7 +1,7 @@
 package edu.austral.starship.scala.base.view
 
 import java.awt.Rectangle
-import java.awt.geom.Ellipse2D
+import java.awt.geom.{Ellipse2D, Rectangle2D}
 
 import edu.austral.starship.scala.base.framework.ImageLoader
 import edu.austral.starship.scala.base.models._
@@ -24,18 +24,27 @@ object Renderer {
 
   def renderObjects(objects: List[GameObject], images: Map[String, PImage]): List[RenderResult] = {
     objects map {
-//      Poner un bounds cuadrado
       case Spaceship(position, direction, health) =>
-        RenderResult(position,direction,images("spaceship"), 70,new Rectangle(), null)
+        val sizeOfImage = 70
+        val xUpperLeft: Float = position.x - sizeOfImage / 2
+        val yUpperLeft: Float = position.y + sizeOfImage / 2
+        RenderResult(position,direction,images("spaceship"), sizeOfImage,
+          new Rectangle2D.Float(xUpperLeft, yUpperLeft, sizeOfImage, sizeOfImage), null)
 
       case Bullet(position, direction, health, _observers) =>
-        RenderResult(position,direction,images("regularBullet"), 40,new Rectangle(), null)
+        val sizeOfImage = 40
+        val reducePixels = 20
+        val xUpperLeft: Float = position.x - sizeOfImage / 2 + reducePixels/2
+        val yUpperLeft: Float = position.y + sizeOfImage / 2 - reducePixels/2
+        RenderResult(position,direction,images("regularBullet"), sizeOfImage,
+          new Rectangle2D.Float(xUpperLeft, yUpperLeft, sizeOfImage - reducePixels, sizeOfImage - reducePixels), null)
 
       case Asteroid(position, direction, health, size) =>
-        val xUpperLeft = position.x - size / 2
-        val yUpperLeft = position.y + size / 2
+        val reducePixels = 20
+        val xUpperLeft = position.x - size / 2 + reducePixels/2
+        val yUpperLeft = position.y + size / 2 - reducePixels/2
         RenderResult(position,direction,images("asteroid"), size,
-          new Ellipse2D.Float(xUpperLeft,yUpperLeft, size - 5, size - 5), null)
+          new Ellipse2D.Float(xUpperLeft,yUpperLeft, size - reducePixels, size - reducePixels), null)
     }
   }
 

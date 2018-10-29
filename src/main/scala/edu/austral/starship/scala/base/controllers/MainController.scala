@@ -38,8 +38,6 @@ object MainController extends ObservableKeyEvent with GameFramework {
     val playerController = PlayerController(player, configA)
     observers = playerController :: observers
 
-//    val center: Int = Configuration.size / 2
-//    MapController.addObjects(List(Asteroid(Vector2(center, center), Vector2(-1,0),100,70.toFloat)))
   }
 
   override def draw(graphics: PGraphics, timeSinceLastDraw: Float, keySet: Set[Int]): Unit = {
