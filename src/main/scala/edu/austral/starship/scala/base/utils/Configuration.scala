@@ -7,3 +7,8 @@ package edu.austral.starship.scala.base.utils
 object Configuration {
   val size = 600
 }
+
+///src/main/resources/application.conf
+//
+//importar typsafe.config
+//ConfigFactory.load()

@@ -23,7 +23,7 @@ object Renderer {
 
   def renderObjects(objects: List[GameObject], images: Map[String, PImage]): List[RenderResult] = {
     objects map {
-    case element@Spaceship(position, direction, health, _observers) =>
+    case element@Spaceship(position, direction, health, _observers, _) =>
       val sizeOfImage = 70
       val reduceCollider = 40
       val xUpperLeft: Float = position.x - sizeOfImage / 2 + reduceCollider/2

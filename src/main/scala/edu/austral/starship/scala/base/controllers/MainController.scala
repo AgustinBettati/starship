@@ -38,19 +38,18 @@ object MainController extends ObservableKeyEvent with GameFramework {
       Move.GUN_CHANGE -> PConstants.ALT
     )
 
-//    val playerB = Player("Player B", Vector2(Configuration.size-100, Configuration.size /2))
-//    val configB: Map[Move.Value, Int] = Map(
-//      Move.UP -> JavaKeyEvent.VK_W,
-//      Move.DOWN -> JavaKeyEvent.VK_S,
-//      Move.LEFT -> JavaKeyEvent.VK_A,
-//      Move.RIGHT -> JavaKeyEvent.VK_D,
-//      Move.FIRE -> JavaKeyEvent.VK_SPACE,
-//      Move.GUN_CHANGE -> JavaKeyEvent.VK_C
-//    )
-    players = List(playerA)
+    val playerB = Player("Player B", Vector2(Configuration.size-100, Configuration.size /2))
+    val configB: Map[Move.Value, Int] = Map(
+      Move.UP -> JavaKeyEvent.VK_2,
+      Move.DOWN -> JavaKeyEvent.VK_3,
+      Move.LEFT -> JavaKeyEvent.VK_1,
+      Move.RIGHT -> JavaKeyEvent.VK_4,
+      Move.FIRE -> JavaKeyEvent.VK_SPACE,
+      Move.GUN_CHANGE -> JavaKeyEvent.VK_C
+    )
+    players = List(playerA, playerB)
     MapController.addObjects(players.map(_.spaceship))
-    observers = PlayerController(playerA, configA) :: observers
-
+    observers = PlayerController(playerA, configA) :: PlayerController(playerB, configB) :: observers
   }
 
   override def draw(graphics: PGraphics, timeSinceLastDraw: Float, keySet: Set[Int]): Unit = {

@@ -12,7 +12,8 @@ trait ObservableSpaceship {
   def notifyCrash(): Unit
 }
 
-case class Spaceship(var position: Vector2, var direction: Vector2 = Vector2(0,-1), var health: Int = 100, var observers: List[SpaceshipObserver] = Nil) extends GameObject with ObservableSpaceship {
+case class Spaceship(var position: Vector2, var direction: Vector2 = Vector2(0,-1), var health: Int = 100,
+                     var observers: List[SpaceshipObserver] = Nil, spawn: Vector2) extends GameObject with ObservableSpaceship {
 
   override def wentOutOfBounds(): Unit = {
     val boundry = Configuration.size
@@ -51,12 +52,12 @@ case class Spaceship(var position: Vector2, var direction: Vector2 = Vector2(0,-
 
   def reset(): Unit = {
     health = 100
-    position = Vector2(Configuration.size / 2, Configuration.size / 2)
-    direction = Vector2(0, -1)
+    position = spawn
+    direction = Vector2(-1,0)
   }
 }
 
 object Spaceship {
   def apply(player: Player,initPosition: Vector2): Spaceship =
-    new Spaceship(initPosition, Vector2(0, -1), observers = List(player))
+    new Spaceship(initPosition, Vector2(0, -1), observers = List(player), spawn = initPosition)
 }

@@ -36,20 +36,24 @@ object ProcessingDrawer {
     for((player, index) <- players.zipWithIndex) {
       val spaceship = player.spaceship
       val pos = spaceship.position
+      graphics.textSize(10)
+      graphics.fill(0, 0, 0)
+      graphics.text(s"${player.name}", pos.x-30, pos.y + 45, 100)
+
       graphics.fill(174, 255, 185)
       graphics.noStroke()
-      graphics.rect(pos.x-30, pos.y + 35, spaceship.health * 60 / 100, 8)
+      graphics.rect(pos.x-30, pos.y + 50, spaceship.health * 60 / 100, 8)
       graphics.noFill()
       graphics.stroke(0)
-      graphics.rect(pos.x-30, pos.y + 35, 60, 8)
+      graphics.rect(pos.x-30, pos.y + 50, 60, 8)
 
       graphics.textSize(20)
       graphics.fill(0, 0, 0)
-      graphics.text(s"${player.name}", 30, 40, 100)
+      graphics.text(s"${player.name}", index * 100 +30, 40, 100)
       graphics.textSize(15)
       graphics.fill(60, 65, 255)
-      graphics.text(s"Score: ${player.score}", 30, 60, 100)
-      graphics.text(s"Lives: ${player.lives}", 30, 85, 100)
+      graphics.text(s"Score: ${player.score}",index * 100 + 30, 60, 100)
+      graphics.text(s"Lives: ${player.lives}",index * 100 + 30, 85, 100)
     }
   }
 

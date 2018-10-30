@@ -33,7 +33,7 @@ case class Player(name: String, var score: Int, var lives: Int, var spaceship: S
 
 object Player {
   def apply(name: String, initPosition: Vector2): Player ={
-    val createdPlayer = Player(name, 0, 5, Spaceship(initPosition))
+    val createdPlayer = Player(name, 0, 5, Spaceship(initPosition, spawn = initPosition))
     createdPlayer.spaceship.observers = List(createdPlayer)
     createdPlayer
   }
