@@ -1,5 +1,6 @@
 package edu.austral.starship.scala.base.models
 
+import edu.austral.starship.scala.base.controllers.MainController
 import edu.austral.starship.scala.base.utils.Configuration
 import edu.austral.starship.scala.base.vector.Vector2
 
@@ -15,9 +16,9 @@ trait SpaceshipObserver {
   def onSpaceshipCrash(): Unit
 }
 
-case class Player(name: String, var score: Int, var lives: Int, var spaceship: Spaceship) extends BulletObserver with SpaceshipObserver {
+case class Player(name: String, var score: Int = 0, var lives: Int = 3, var spaceship: Spaceship) extends BulletObserver with SpaceshipObserver {
 
-  def increaseScore(addition: Int): Unit ={
+  def increaseScore(addition: Int): Unit = {
     score = score + addition
   }
 
@@ -27,13 +28,14 @@ case class Player(name: String, var score: Int, var lives: Int, var spaceship: S
 
   override def onSpaceshipCrash(): Unit = {
     this.lives -= 1
+    if(lives < 1) MainController.endGame()
     spaceship.reset()
   }
 }
 
 object Player {
   def apply(name: String, initPosition: Vector2): Player ={
-    val createdPlayer = Player(name, 0, 5, Spaceship(initPosition, spawn = initPosition))
+    val createdPlayer = Player(name, spaceship = Spaceship(initPosition, spawn = initPosition))
     createdPlayer.spaceship.observers = List(createdPlayer)
     createdPlayer
   }

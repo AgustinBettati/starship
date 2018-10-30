@@ -13,6 +13,20 @@ import processing.core.{PConstants, PGraphics}
   */
 
 object ProcessingDrawer {
+  def endFrame(players: List[Player], graphics: PGraphics): Unit = {
+    graphics.background(255,255,255)
+    val winner = players.maxBy(player => player.lives)
+    for((player, index) <- players.zipWithIndex) {
+      graphics.textAlign(PConstants.CENTER)
+      graphics.textSize(40)
+      graphics.fill(48, 132, 22)
+      graphics.text(s"Player ${winner.name} wins!", Configuration.size/2,200)
+      graphics.textSize(20)
+      graphics.fill(0, 0, 0)
+      graphics.text(s"${player.name} -> Score: ${player.score}, Lives: ${player.lives}", Configuration.size/2,index*50 + 300 )
+    }
+  }
+
 
   def setupVisual(settings: WindowSettings): Unit = {
     settings.setSize(Configuration.size, Configuration.size)

@@ -16,17 +16,19 @@ trait ObservableKeyEvent {
   def notifyPressedKeyEvent(key: Int): Unit
 }
 
-object MainController extends ObservableKeyEvent with GameFramework {
+trait Observable
+
+object MainController extends GameFramework with ObservableKeyEvent {
 
   private var observers: List[KeyEventObserver] = Nil
   private var images: Map[String, PImage] = Map()
   private var players: List[Player] = Nil
   private var collisionEngine = new CollisionEngine[RenderResult]
+  private var finished = false
 
   override def setup(windowsSettings: WindowSettings, imageLoader: ImageLoader): Unit = {
     ProcessingDrawer.setupVisual(windowsSettings)
     images = Renderer.loadImages(imageLoader)
-
 
     val playerA = Player("Player A", Vector2(100, Configuration.size /2))
     val configA: Map[Move.Value, Int] = Map(
@@ -53,22 +55,23 @@ object MainController extends ObservableKeyEvent with GameFramework {
   }
 
   override def draw(graphics: PGraphics, timeSinceLastDraw: Float, keySet: Set[Int]): Unit = {
-    keySet foreach notifyContinuousKeyEvent
-    MapController.moveObjects()
-    val rendered: List[RenderResult] = Renderer.renderObjects(MapController.obtainObjects, images)
-    collisionEngine.checkCollisions(rendered)
-    ProcessingDrawer.drawObjects(players,rendered, graphics)
+    if(!finished) {
+      keySet foreach notifyContinuousKeyEvent
+      MapController.moveObjects()
+      val rendered: List[RenderResult] = Renderer.renderObjects(MapController.obtainObjects, images)
+      collisionEngine.checkCollisions(rendered)
+      ProcessingDrawer.drawObjects(players,rendered, graphics)
+    }
+    else ProcessingDrawer.endFrame(players, graphics)
   }
 
-  override def keyPressed(event: KeyEvent): Unit = {
-    notifyPressedKeyEvent(event.getKeyCode)
-  }
+  override def keyPressed(event: KeyEvent): Unit = notifyPressedKeyEvent(event.getKeyCode)
 
-  override def keyReleased(event: KeyEvent): Unit = {
-  }
+  override def keyReleased(event: KeyEvent): Unit = Unit
 
   override def notifyContinuousKeyEvent(key: Int): Unit = observers.foreach(_.onContinuousKeyEvent(key))
 
   override def notifyPressedKeyEvent(key: Int): Unit = observers.foreach(_.onPressedKeyEvent(key))
 
+  def endGame(): Unit = finished = true
 }
