@@ -45,11 +45,11 @@ object ProcessingDrawer {
 
       graphics.textSize(20)
       graphics.fill(0, 0, 0)
-      graphics.text(s"${player.name}", 30, 30, 100)
+      graphics.text(s"${player.name}", 30, 40, 100)
       graphics.textSize(15)
       graphics.fill(60, 65, 255)
-      graphics.text(s"Score: ${player.score}", 30, 50, 100)
-      graphics.text(s"Lives: ${player.lives}", 30, 75, 100)
+      graphics.text(s"Score: ${player.score}", 30, 60, 100)
+      graphics.text(s"Lives: ${player.lives}", 30, 85, 100)
     }
   }
 
