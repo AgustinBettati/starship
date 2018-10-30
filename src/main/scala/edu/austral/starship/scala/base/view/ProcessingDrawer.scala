@@ -19,19 +19,11 @@ object ProcessingDrawer {
     settings.enableHighPixelDensity()
   }
 
-
   def drawObjects(players: List[Player], objects: List[RenderResult], graphics: PGraphics): Unit = {
     graphics.background(255,255,255)
-
-    graphics.textSize(20)
-    for((player, index) <- players.zipWithIndex) {
-      graphics.fill(0, 102, 153)
-      graphics.text(s"${player.name}: ${player.score}", 50, 50, 100)
-    }
-
     objects foreach {
       case RenderResult(position, direction, image, sizeOfImage, shape, _) =>
-        drawBoundsOfCollider(graphics, shape)
+//        drawBoundsOfCollider(graphics, shape)
         graphics.pushMatrix()
         graphics.imageMode(PConstants.CENTER)
         graphics.translate(position.x, position.y)
@@ -39,6 +31,25 @@ object ProcessingDrawer {
         graphics.rotate(angle)
         graphics.image(image, 0, 0, sizeOfImage, sizeOfImage)
         graphics.popMatrix()
+    }
+
+    for((player, index) <- players.zipWithIndex) {
+      val spaceship = player.spaceship
+      val pos = spaceship.position
+      graphics.fill(174, 255, 185)
+      graphics.noStroke()
+      graphics.rect(pos.x-30, pos.y + 35, spaceship.health * 60 / 100, 8)
+      graphics.noFill()
+      graphics.stroke(0)
+      graphics.rect(pos.x-30, pos.y + 35, 60, 8)
+
+      graphics.textSize(20)
+      graphics.fill(0, 0, 0)
+      graphics.text(s"${player.name}", 30, 30, 100)
+      graphics.textSize(15)
+      graphics.fill(60, 65, 255)
+      graphics.text(s"Score: ${player.score}", 30, 50, 100)
+      graphics.text(s"Lives: ${player.lives}", 30, 75, 100)
     }
   }
 
@@ -48,7 +59,6 @@ object ProcessingDrawer {
     val y: Float = bounds.getY.toFloat
     val width: Float = bounds.getWidth.toFloat
     val height: Float = bounds.getHeight.toFloat
-
     graphics.point(x, y)
     graphics.point(x + width, y)
     graphics.point(x, y - height)

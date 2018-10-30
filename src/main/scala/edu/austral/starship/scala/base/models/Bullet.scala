@@ -33,7 +33,10 @@ case class Bullet(
 
   override def collisionedWithBullet(bullet: Bullet): Unit = Unit
 
-  override def collisionedWithSpaceship(spaceship: Spaceship): Unit =notifyOnHit(10)
+  override def collisionedWithSpaceship(spaceship: Spaceship): Unit = {
+    notifyOnHit(10)
+    health = 0
+  }
 
   override def handleCollision(other: CollisionHandler): Unit = other.collisionedWithBullet(this)
 }
