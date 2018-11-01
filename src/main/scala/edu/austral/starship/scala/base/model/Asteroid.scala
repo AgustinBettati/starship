@@ -1,4 +1,4 @@
-package edu.austral.starship.scala.base.models
+package edu.austral.starship.scala.base.model
 
 import edu.austral.starship.scala.base.vector.Vector2
 
@@ -14,20 +14,21 @@ case class Asteroid( var position: Vector2,
                      size: Float
                    ) extends GameObject {
 
-  override def advance(): Unit = position = position + direction.unitary * (0.5 + 0.5 * (Math.abs(size-80) / 20)).toFloat
+  override def advance(): Unit = position = position + direction.unitary * (0.4 + 0.5 * (Math.abs(size-80) / 20)).toFloat
 
-  override def wentOutOfBounds(): Unit = health = 0
+  override def wentOutOfBounds(): Unit = eliminate
 
   override def collisionedWithAsteroid(ast: Asteroid): Unit = Unit
 
   override def collisionedWithBullet(bullet: Bullet): Unit = {
-    health = 0
+    eliminate
   }
 
   override def collisionedWithSpaceship(spaceship: Spaceship): Unit = {
-    health = 0
+    eliminate
   }
 
   override def handleCollision(other: CollisionHandler): Unit = other.collisionedWithAsteroid(this)
 
+  override def eliminate(): Unit = health = 0
 }

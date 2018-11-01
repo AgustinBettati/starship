@@ -1,6 +1,6 @@
-package edu.austral.starship.scala.base.controllers
+package edu.austral.starship.scala.base.controller
 
-import edu.austral.starship.scala.base.models.Player
+import edu.austral.starship.scala.base.model.Player
 import edu.austral.starship.scala.base.utils.Move
 import edu.austral.starship.scala.base.vector.Vector2
 
@@ -13,7 +13,6 @@ trait KeyEventObserver {
   def onPressedKeyEvent(key: Int)
 }
 
-//player controller va tener al player, y player al spaceship
 case class PlayerController(var player: Player, config: Map[Move.Value, Int]) extends KeyEventObserver {
 
   override def onContinuousKeyEvent(key: Int): Unit = {
@@ -29,10 +28,10 @@ case class PlayerController(var player: Player, config: Map[Move.Value, Int]) ex
   override def onPressedKeyEvent(key: Int): Unit = {
     key match {
       case _ if key == config(Move.FIRE) => {
-        val firedBullet = player.spaceship.fireBullet(player)
-        MapController.addObjects(List(firedBullet))
+        val firedBullets = player.spaceship.fireBullet(player)
+        MapController.addObjects(firedBullets)
       }
-      case _ if key == config(Move.GUN_CHANGE) =>
+      case _ if key == config(Move.GUN_CHANGE) => player.spaceship.changeGun()
       case _ =>
     }
   }

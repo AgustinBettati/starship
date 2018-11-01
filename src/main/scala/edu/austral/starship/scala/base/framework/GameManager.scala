@@ -1,6 +1,6 @@
 package edu.austral.starship.scala.base.framework
 
-import edu.austral.starship.scala.base.controllers.MainController
+import edu.austral.starship.scala.base.controller.MainController
 import processing.core.PApplet
 import processing.event.KeyEvent
 

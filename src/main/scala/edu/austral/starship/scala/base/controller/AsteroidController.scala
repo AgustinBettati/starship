@@ -1,6 +1,6 @@
-package edu.austral.starship.scala.base.controllers
+package edu.austral.starship.scala.base.controller
 
-import edu.austral.starship.scala.base.models.Asteroid
+import edu.austral.starship.scala.base.model.Asteroid
 import edu.austral.starship.scala.base.utils.Configuration
 import edu.austral.starship.scala.base.vector.Vector2
 

@@ -1,4 +1,4 @@
-package edu.austral.starship.scala.base.models
+package edu.austral.starship.scala.base.model
 
 import java.awt.Shape
 

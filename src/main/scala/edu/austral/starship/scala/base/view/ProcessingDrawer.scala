@@ -3,7 +3,7 @@ package edu.austral.starship.scala.base.view
 import java.awt.{Rectangle, Shape}
 
 import edu.austral.starship.scala.base.framework.WindowSettings
-import edu.austral.starship.scala.base.models._
+import edu.austral.starship.scala.base.model._
 import edu.austral.starship.scala.base.utils.Configuration
 import processing.core.{PConstants, PGraphics}
 

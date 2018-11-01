@@ -1,6 +1,6 @@
-package edu.austral.starship.scala.base.models
+package edu.austral.starship.scala.base.model
 
-import edu.austral.starship.scala.base.controllers.MainController
+import edu.austral.starship.scala.base.controller.MainController
 import edu.austral.starship.scala.base.utils.Configuration
 import edu.austral.starship.scala.base.vector.Vector2
 
@@ -35,7 +35,7 @@ case class Player(name: String, var score: Int = 0, var lives: Int = 3, var spac
 
 object Player {
   def apply(name: String, initPosition: Vector2): Player ={
-    val createdPlayer = Player(name, spaceship = Spaceship(initPosition, spawn = initPosition))
+    val createdPlayer = Player(name, spaceship = Spaceship(initPosition))
     createdPlayer.spaceship.observers = List(createdPlayer)
     createdPlayer
   }

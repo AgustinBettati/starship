@@ -1,4 +1,4 @@
-package edu.austral.starship.scala.base.models
+package edu.austral.starship.scala.base.model
 
 import edu.austral.starship.scala.base.utils.Configuration
 import edu.austral.starship.scala.base.vector.Vector2
@@ -13,7 +13,7 @@ trait ObservableSpaceship {
 }
 
 case class Spaceship(var position: Vector2, var direction: Vector2 = Vector2(0,-1), var health: Int = 100,
-                     var observers: List[SpaceshipObserver] = Nil, spawn: Vector2) extends GameObject with ObservableSpaceship {
+                     var observers: List[SpaceshipObserver] = Nil,var guns: List[Gun], spawn: Vector2) extends GameObject with ObservableSpaceship {
 
   override def wentOutOfBounds(): Unit = {
     val boundry = Configuration.size
@@ -30,20 +30,24 @@ case class Spaceship(var position: Vector2, var direction: Vector2 = Vector2(0,-
     direction = Vector2.fromModule(direction.module, (direction * 5 + addition).angle)
   }
 
-  def fireBullet(player: Player): Bullet = {
+  def fireBullet(player: Player): List[Bullet] = {
     //esto lo va hacer gun
-    Bullet(position + direction.unitary * 50, direction, player)
+    guns.head.fireBullet(player)
+  }
+
+  def changeGun(): Unit = {
+    guns = guns.tail ::: List(guns.head)
   }
 
   override def collisionedWithAsteroid(ast: Asteroid): Unit = reduceHealth(30)
 
-  override def collisionedWithBullet(bullet: Bullet): Unit = reduceHealth(10)
+  override def collisionedWithBullet(bullet: Bullet): Unit = reduceHealth(bullet.damage)
 
   override def collisionedWithSpaceship(spaceship: Spaceship): Unit = reduceHealth(30)
 
   override def handleCollision(other: CollisionHandler): Unit = other.collisionedWithSpaceship(this)
 
-  private def reduceHealth(amt: Int) = {
+  private def reduceHealth(amt: Int): Unit = {
     health -= amt
     if (health <= 0) notifyCrash()
   }
@@ -55,9 +59,15 @@ case class Spaceship(var position: Vector2, var direction: Vector2 = Vector2(0,-
     position = spawn
     direction = Vector2(-1,0)
   }
+
+  override def eliminate(): Unit = health = 0
 }
 
 object Spaceship {
   def apply(player: Player,initPosition: Vector2): Spaceship =
-    new Spaceship(initPosition, Vector2(0, -1), observers = List(player), spawn = initPosition)
+    new Spaceship(initPosition, Vector2(0, -1), observers = List(player),guns = List(ShotGun(), LaserGun()), spawn = initPosition)
+
+  def apply(initPosition: Vector2): Spaceship =
+    new Spaceship(initPosition, Vector2(0, -1), observers = Nil,guns = List(ShotGun(), LaserGun()), spawn = initPosition)
+
 }

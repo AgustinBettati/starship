@@ -1,10 +1,10 @@
-package edu.austral.starship.scala.base.controllers
+package edu.austral.starship.scala.base.controller
 
 import java.awt.event.{KeyEvent => JavaKeyEvent}
 
 import edu.austral.starship.scala.base.collision.CollisionEngine
 import edu.austral.starship.scala.base.framework.{GameFramework, ImageLoader, WindowSettings}
-import edu.austral.starship.scala.base.models._
+import edu.austral.starship.scala.base.model._
 import edu.austral.starship.scala.base.utils.{Configuration, Move}
 import edu.austral.starship.scala.base.vector.Vector2
 import edu.austral.starship.scala.base.view.{ProcessingDrawer, Renderer}

@@ -1,4 +1,4 @@
-package edu.austral.starship.scala.base.models
+package edu.austral.starship.scala.base.model
 
 import edu.austral.starship.scala.base.vector.Vector2
 
@@ -13,6 +13,7 @@ trait GameObject extends CollisionHandler {
   def direction: Vector2
   def health: Int
 
+  def eliminate(): Unit
   def advance(): Unit
   def wentOutOfBounds(): Unit
 }
