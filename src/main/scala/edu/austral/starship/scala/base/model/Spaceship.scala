@@ -30,14 +30,9 @@ case class Spaceship(var position: Vector2, var direction: Vector2 = Vector2(0,-
     direction = Vector2.fromModule(direction.module, (direction * 5 + addition).angle)
   }
 
-  def fireBullet(player: Player): List[Bullet] = {
-    //esto lo va hacer gun
-    guns.head.fireBullet(player)
-  }
+  def fireBullet(player: Player): List[Bullet] = guns.head.fireBullet(player)
 
-  def changeGun(): Unit = {
-    guns = guns.tail ::: List(guns.head)
-  }
+  def changeGun(): Unit = guns = guns.tail ::: List(guns.head)
 
   override def collisionedWithAsteroid(ast: Asteroid): Unit = reduceHealth(30)
 
@@ -61,6 +56,8 @@ case class Spaceship(var position: Vector2, var direction: Vector2 = Vector2(0,-
   }
 
   override def eliminate(): Unit = health = 0
+
+  def chargeBullets(score: Int): Unit = guns.foreach(gun => gun.chargeBullets(score/2))
 }
 
 object Spaceship {

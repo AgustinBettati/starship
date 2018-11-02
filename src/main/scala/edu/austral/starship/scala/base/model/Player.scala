@@ -24,6 +24,7 @@ case class Player(name: String, var score: Int = 0, var lives: Int = 3, var spac
 
   override def onBulletHit(score: Int): Unit = {
     this.score += score
+    spaceship.chargeBullets(score)
   }
 
   override def onSpaceshipCrash(): Unit = {

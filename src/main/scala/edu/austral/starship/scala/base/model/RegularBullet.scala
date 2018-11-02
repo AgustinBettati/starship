@@ -15,7 +15,7 @@ case class RegularBullet(
                       ) extends Bullet {
 
 
-  override def advance(): Unit = position = position + (direction.unitary * 2.toFloat)
+  override def advance(): Unit = position = position + (direction.unitary * 2.2.toFloat)
 
   override def eliminate(): Unit = health = 0
 }
