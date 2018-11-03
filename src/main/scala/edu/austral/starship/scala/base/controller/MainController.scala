@@ -29,29 +29,38 @@ object MainController extends GameFramework with ObservableKeyEvent {
   override def setup(windowsSettings: WindowSettings, imageLoader: ImageLoader): Unit = {
     ProcessingDrawer.setupVisual(windowsSettings)
     images = Renderer.loadImages(imageLoader)
-
-    val playerA = Player("Player A", Vector2(100, Configuration.size /2))
-    val configA: Map[Move.Value, Int] = Map(
-      Move.UP -> PConstants.UP,
-      Move.DOWN -> PConstants.DOWN,
-      Move.LEFT -> PConstants.LEFT,
-      Move.RIGHT -> PConstants.RIGHT,
-      Move.FIRE -> PConstants.SHIFT,
-      Move.GUN_CHANGE -> PConstants.ALT
+    val players = List (
+      "PlayerA" -> Map(
+        Move.UP -> PConstants.UP,
+        Move.DOWN -> PConstants.DOWN,
+        Move.LEFT -> PConstants.LEFT,
+        Move.RIGHT -> PConstants.RIGHT,
+        Move.FIRE -> PConstants.SHIFT,
+        Move.GUN_CHANGE -> PConstants.ALT
+      ),
+      "PlayerB" -> Map(
+        Move.UP -> JavaKeyEvent.VK_2,
+        Move.DOWN -> JavaKeyEvent.VK_3,
+        Move.LEFT -> JavaKeyEvent.VK_1,
+        Move.RIGHT -> JavaKeyEvent.VK_4,
+        Move.FIRE -> JavaKeyEvent.VK_SPACE,
+        Move.GUN_CHANGE -> JavaKeyEvent.VK_C
+      )
     )
+    configurePlayers(players)
+  }
 
-    val playerB = Player("Player B", Vector2(Configuration.size-100, Configuration.size /2))
-    val configB: Map[Move.Value, Int] = Map(
-      Move.UP -> JavaKeyEvent.VK_2,
-      Move.DOWN -> JavaKeyEvent.VK_3,
-      Move.LEFT -> JavaKeyEvent.VK_1,
-      Move.RIGHT -> JavaKeyEvent.VK_4,
-      Move.FIRE -> JavaKeyEvent.VK_SPACE,
-      Move.GUN_CHANGE -> JavaKeyEvent.VK_C
+  private def configurePlayers(data: List[(String, Map[Move.Value, Int])]): Unit = {
+    MapController.addObjects(
+      data.zipWithIndex.map{
+        case ((name, config), index) =>
+          val createdPlayer = Player(name, Vector2(50 + index*((Configuration.size - 100)/(data.length-1)), Configuration.size /2))
+          observers = PlayerController(createdPlayer, config) :: observers
+          players = createdPlayer :: players
+          createdPlayer
+      }
+      .map(_.spaceship)
     )
-    players = List(playerA, playerB)
-    MapController.addObjects(players.map(_.spaceship))
-    observers = PlayerController(playerA, configA) :: PlayerController(playerB, configB) :: observers
   }
 
   override def draw(graphics: PGraphics, timeSinceLastDraw: Float, keySet: Set[Int]): Unit = {
