@@ -27,25 +27,19 @@ object Renderer {
     objects map {
       case element@Spaceship(position, direction, health, _observers, _, _) =>
         val sizeOfImage = 70
-        val reduceCollider = 40
+        val reduceCollider = 33
         render(position, direction, sizeOfImage,reduceCollider, images("spaceship"), element)
-
-
       case element@LaserBullet(position, direction, health, _damage, _observers) =>
         val sizeOfImage = 40
-        val reduceCollider = 25
+        val reduceCollider = 15
         render(position, direction, sizeOfImage,reduceCollider, images("laserBullet"), element)
-
-
       case element@RegularBullet(position, direction, health, _damage, _observers) =>
         val sizeOfImage = 40
-        val reduceCollider = 25
+        val reduceCollider = 15
         render(position, direction, sizeOfImage,reduceCollider, images("regularBullet"), element)
-
       case element@Asteroid(position, direction, health, size) =>
         val reduceCollider = 25
         render(position, direction, size,reduceCollider, images("asteroid"), element)
-
     }
   }
 
