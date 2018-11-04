@@ -17,6 +17,10 @@ case class LaserBullet(
 
   override def advance(): Unit = position = position + (direction.unitary * 2.5.toFloat)
 
+  def collisionedWithAsteroid(ast: Asteroid): Unit = {
+    notifyOnHit(2)
+  }
+
   override def eliminate(): Unit = health = 0
 }
 

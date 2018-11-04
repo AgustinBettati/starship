@@ -17,6 +17,11 @@ case class RegularBullet(
 
   override def advance(): Unit = position = position + (direction.unitary * 2.2.toFloat)
 
+  def collisionedWithAsteroid(ast: Asteroid): Unit = {
+    notifyOnHit(2)
+    this.eliminate()
+  }
+
   override def eliminate(): Unit = health = 0
 }
 

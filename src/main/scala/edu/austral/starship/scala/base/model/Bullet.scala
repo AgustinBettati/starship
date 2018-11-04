@@ -17,15 +17,9 @@ trait Bullet extends ObservableBullet with GameObject {
   def observers: List[BulletObserver]
   def damage: Int
 
-
   def wentOutOfBounds(): Unit = this.eliminate
 
   def notifyOnHit(score: Int): Unit = observers foreach(_.onBulletHit(score))
-
-  def collisionedWithAsteroid(ast: Asteroid): Unit = {
-    notifyOnHit(2)
-    this.eliminate
-  }
 
   def collisionedWithBullet(bullet: Bullet): Unit = Unit
 

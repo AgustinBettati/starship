@@ -54,7 +54,7 @@ object MainController extends GameFramework with ObservableKeyEvent {
     MapController.addObjects(
       data.zipWithIndex.map{
         case ((name, config), index) =>
-          val createdPlayer = Player(name, Vector2(50 + index*((Configuration.size - 100)/(data.length-1)), Configuration.size /2))
+          val createdPlayer = Player(name, Vector2(50 + (index+1)*((Configuration.size - 100)/(data.length+1)), Configuration.size /2))
           observers = PlayerController(createdPlayer, config) :: observers
           players = createdPlayer :: players
           createdPlayer
