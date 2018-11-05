@@ -30,22 +30,30 @@ object MainController extends GameFramework with ObservableKeyEvent {
     ProcessingDrawer.setupVisual(windowsSettings)
     images = Renderer.loadImages(imageLoader)
     val players = List (
-      "PlayerA" -> Map(
+      "Apu" -> Map(
         Move.UP -> PConstants.UP,
         Move.DOWN -> PConstants.DOWN,
         Move.LEFT -> PConstants.LEFT,
         Move.RIGHT -> PConstants.RIGHT,
         Move.FIRE -> PConstants.SHIFT,
         Move.GUN_CHANGE -> PConstants.ALT
-      ),
-      "PlayerB" -> Map(
-        Move.UP -> JavaKeyEvent.VK_2,
-        Move.DOWN -> JavaKeyEvent.VK_3,
-        Move.LEFT -> JavaKeyEvent.VK_1,
-        Move.RIGHT -> JavaKeyEvent.VK_4,
-        Move.FIRE -> JavaKeyEvent.VK_SPACE,
-        Move.GUN_CHANGE -> JavaKeyEvent.VK_C
       )
+//      "Invitado1" -> Map(
+//        Move.UP -> JavaKeyEvent.VK_2,
+//        Move.DOWN -> JavaKeyEvent.VK_3,
+//        Move.LEFT -> JavaKeyEvent.VK_1,
+//        Move.RIGHT -> JavaKeyEvent.VK_4,
+//        Move.FIRE -> JavaKeyEvent.VK_SPACE,
+//        Move.GUN_CHANGE -> JavaKeyEvent.VK_5
+//      ),
+//      "Invitado2" -> Map(
+//        Move.UP -> JavaKeyEvent.VK_8,
+//        Move.DOWN -> JavaKeyEvent.VK_9,
+//        Move.LEFT -> JavaKeyEvent.VK_7,
+//        Move.RIGHT -> JavaKeyEvent.VK_0,
+//        Move.FIRE -> JavaKeyEvent.VK_6,
+//        Move.GUN_CHANGE -> JavaKeyEvent.VK_DELETE
+//      )
     )
     configurePlayers(players)
   }

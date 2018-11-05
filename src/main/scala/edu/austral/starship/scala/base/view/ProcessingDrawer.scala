@@ -27,7 +27,6 @@ object ProcessingDrawer {
     }
   }
 
-
   def setupVisual(settings: WindowSettings): Unit = {
     settings.setSize(Configuration.size, Configuration.size)
     settings.enableHighPixelDensity()
@@ -37,6 +36,7 @@ object ProcessingDrawer {
     graphics.background(255,255,255)
     objects foreach {
       case RenderResult(position, direction, image, sizeOfImage, shape, _) =>
+        // drawBoundsOfCollider(graphics, shape)
         graphics.pushMatrix()
         graphics.imageMode(PConstants.CENTER)
         graphics.translate(position.x, position.y)
@@ -49,6 +49,18 @@ object ProcessingDrawer {
       infoUnderSpaceship(graphics, player)
       visualizeScore(graphics, player, index)
     }
+  }
+
+  private def drawBoundsOfCollider(graphics: PGraphics, shape: Shape): Unit = {
+    val bounds: Rectangle = shape.getBounds
+    val x: Float = bounds.getX.toFloat
+    val y: Float = bounds.getY.toFloat
+    val width: Float = bounds.getWidth.toFloat
+    val height: Float = bounds.getHeight.toFloat
+     graphics.point(x, y)
+    graphics.point(x + width, y)
+    graphics.point(x, y - height)
+    graphics.point(x + width, y - height)
   }
 
   private def infoUnderSpaceship(graphics: PGraphics, player: Player): Unit = {
